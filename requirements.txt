@@ -1,0 +1,6 @@
+pandas
+python-dotenv
+sqlalchemy
+psycopg2-binary
+azure-ai-projects 
+azure-identity
