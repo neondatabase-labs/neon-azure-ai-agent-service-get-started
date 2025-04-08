@@ -33,7 +33,32 @@ Imagine you run a SaaS platform and want to:
 
 ## ⚙️ Setup Instructions
 
-### 1. Clone the repo and install dependencies
+### 1. Create a **Neon Database on Azure**
+
+Open the [new Neon Resource page](https://portal.azure.com/#view/Azure_Marketplace_Neon/NeonCreateResource.ReactView) on the Azure portal, and it brings up the form to create a Neon Serverless Postgres Resource. Fill out the form with the required fields and deploy it. 
+
+#### Obtain Neon Database Credentials
+
+1. After the resource is created, go to the Neon Serverless Postgres Organization service and click on the Portal URL. This brings you to the Neon Console
+2. Click “New Project”
+3. Choose an Azure region
+4. Give your project a name (e.g., “Postgres AI Agent”)
+5. Click “Create Project”
+6. Once the project is created successfully, copy the Neon connection string and note down. You can find the connection details in the Connection Details widget on the Neon Dashboard.
+
+```bash
+    postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require
+```
+
+### 2. Create an AI Foundry Project on Azure
+
+Create a new hub and project in the Azure AI Foundry portal by [following the guide](https://learn.microsoft.com/en-us/azure/ai-services/agents/quickstart?pivots=ai-foundry-portal#create-a-hub-and-project-in-azure-ai-foundry-portal) in the Microsoft docs. You also need to [deploy a model](https://learn.microsoft.com/en-us/azure/ai-services/agents/quickstart?pivots=ai-foundry-portal#deploy-a-model) like GPT-4o. 
+
+You only need the **Project connection string** and **Model Deployment Name** from the Azure AI Foundry portal. You can also find your connection string in the **overview** for your project in the [**Azure AI Foundry portal**](https://ai.azure.com/), under **Project details** > **Project connection string**.
+
+Once you have all three values on hand: **Neon connection string**, **Project connection string,** and **Model Deployment Name,** you are ready to set up the Python project to create an Agent.
+
+### 3. Clone the repo and install dependencies
 ```bash
 git clone https://github.com/your-org/billing-anomaly-agent.git
 cd billing-anomaly-agent
@@ -42,7 +67,7 @@ source .venv/bin/activate  # or .venv\Scripts\activate for Windows
 pip install -r requirements.txt
 ```
 
-### 2. Create the .env file
+### 4. Create the .env file
 
 ```env
 PROJECT_CONNECTION_STRING="<Your AI Foundry connection string>"
@@ -50,12 +75,12 @@ AZURE_OPENAI_DEPLOYMENT_NAME=""
 NEON_DB_CONNECTION_STRING="<Your Neon connection string>"
 ```
 
-### 3. Load sample data into Neon
+### 5. Load sample data into Neon
 ```bash
 python init_usage_data.py
 ```
 
-### 4. Run the agent
+### 6. Run the agent
 ```bash
 python billing_anomaly_agent.py
 ```
